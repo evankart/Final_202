@@ -1,38 +1,51 @@
-.App {
-  text-align: center;
+* {
+  font-family: 'Lato', sans-serif !important;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h1 {
+  font-size: 2em !important;
+  font-weight: 600 !important;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+h2 {
+  font-size: 1.5em !important;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+h3 {
+  font-size: 1.2em !important;
+  font-weight: bold !important;
+  margin-top: 10px !important;
 }
 
-.App-link {
-  color: #61dafb;
+/* Bold all headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: bold !important;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+/* Search Items Styles */
+.ais-HierarchicalMenu-label,
+.ais-RefinementList-label {
+  font-weight: bold;
+}
+
+/* Search Results Styles */
+.badge {
+  font-size: 0.75em !important;
+  padding: 6px 10px !important;
+}
+
+.ais-Hits-item {
+  padding: 14px !important;
+}
+
+.col-sm-4 img {
+  width: 100% !important;
+  aspect-ratio: 16/9 !important;
+  object-fit: cover !important;
 }
