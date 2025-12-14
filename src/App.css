@@ -14,7 +14,7 @@ h2 {
 h3 {
   font-size: 1.2em !important;
   font-weight: bold !important;
-  margin-top: 10px !important;
+  margin: 10px 0 !important;
 }
 
 /* Bold all headings */
@@ -27,25 +27,73 @@ h6 {
   font-weight: bold !important;
 }
 
-
-/* Search Items Styles */
-.ais-HierarchicalMenu-label,
-.ais-RefinementList-label {
-  font-weight: bold;
+/* Filters */
+.filter-section {
+  padding: 0 !important;
+  margin-bottom: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border: 1px solid #ddd !important;
+  border-radius: 4px !important;
+  overflow: hidden;
 }
 
-/* Search Results Styles */
+.filter-title {
+  font-size: 1em !important;
+  font-weight: bold !important;
+  border-bottom: 1px solid #ddd !important;
+  background-color: #f8f9fa !important;
+
+}
+
+.filter-section.is-open {
+  border: 1px solid #ddd !important;
+}
+
+/* Filter Items */
+.ais-HierarchicalMenu-item,
+.ais-RefinementList-item {
+  margin-right: 30px;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.filter-section hr {
+  margin-top: 12px;
+}
+
+/* columns overflow */
+.ais-RefinementList-list {
+  display: grid !important;
+  grid-template-rows: repeat(6, auto) !important;
+  grid-auto-flow: column !important;
+  gap: 0 24px !important;
+  list-style: none !important;
+  padding: 0 !important;
+}
+
+/* Search Results */
+.ais-Hits-item {
+  padding: 14px !important;
+  margin-bottom: 12px;
+  border-radius: 6px !important;
+}
+
 .badge {
   font-size: 0.75em !important;
   padding: 6px 10px !important;
 }
 
-.ais-Hits-item {
-  padding: 14px !important;
-}
-
-.col-sm-4 img {
+img {
   width: 100% !important;
+  height: 100% !important;
   aspect-ratio: 16/9 !important;
   object-fit: cover !important;
+}
+
+@media (max-width: 768px) {
+  .download-btn {
+    display: none !important;
+  }
 }
