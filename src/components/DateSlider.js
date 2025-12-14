@@ -7,17 +7,16 @@ const DateSlider = ({ attribute }) => {
     const { refine } = useRange({ attribute });
     const [dateValues, setDateValues] = useState([1950, 2025]);
 
+    // get year start/end timestamps for filtering
     const yearToTimestamp = (year, isEnd = false) => {
         return new Date(year, isEnd ? 11 : 0, isEnd ? 31 : 1).getTime();
     };
 
-    const applyRefine = (years) => {
-        refine([yearToTimestamp(years[0]), yearToTimestamp(years[1], true)]);
-    };
-
     const handleChange = (newValues) => {
         setDateValues(newValues);
-        applyRefine(newValues);
+        const lowerBound = newValues[0] <= 1950 ? undefined : yearToTimestamp(newValues[0]);
+        const upperBound = newValues[1] >= 2025 ? undefined : yearToTimestamp(newValues[1], true);
+        refine([lowerBound, upperBound]);
     };
 
     const primary = '#0d6efd';

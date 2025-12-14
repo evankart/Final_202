@@ -20,7 +20,9 @@ const searchClient = algoliasearch(
 function App() {
 
   const [openHits, setopenHits] = useState(new Set());
-  const [expandedFilters, setExpandedFilters] = useState({ type: true, cost: true, date: true });
+  const [expandedFilters, setExpandedFilters] = useState({
+    type: true, cost: true, date: true, impact: true, life: true, severity: true, state: true, region: true
+  });
 
   const formatDate = (dateStr) => {
     const date = new Date(dateStr);
@@ -54,15 +56,34 @@ function App() {
   const categoryDetails = {
     'Severe Weather': {
       icon: faCloudShowersHeavy,
-      image: "https://images.unsplash.com/photo-1454789476662-53eb23ba5907?q=80&w=1352&auto=format&fit=crop"
+      images: [
+        'https://images.unsplash.com/photo-1454789476662-53eb23ba5907?q=80&w=1352&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1595810033299-5a6fcda2aa71?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://images.unsplash.com/photo-1516490981167-dc990a242afe?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://images.unsplash.com/photo-1500740516770-92bd004b996e?q=80&w=2344&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://images.unsplash.com/photo-1507680465142-ef2223e23308?q=80&w=1951&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+      ]
     },
     'Extreme Temperature': {
       icon: faThermometerEmpty,
-      image: "https://images.unsplash.com/photo-1593349783603-654a7069d88d?q=80&w=2342&auto=format&fit=crop"
+      images: [
+        'https://images.unsplash.com/photo-1593349783603-654a7069d88d?q=80&w=2342&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1560977501-7cb367eccebe?q=80&w=1925&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://images.unsplash.com/photo-1572339152406-cd1dcaa388aa?q=80&w=2334&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://images.unsplash.com/photo-1473580044384-7ba9967e16a0?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+
+      ]
     },
     'Fire': {
       icon: faFire,
-      image: "https://images.unsplash.com/photo-1551207004-3e38b4f52ba6?q=80&w=1364&auto=format&fit=crop"
+      images: [
+        'https://images.unsplash.com/photo-1551207004-3e38b4f52ba6?q=80&w=1364&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1551207004-3e38b4f52ba6?q=80&w=1364&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1692364221415-654b20e6d1d2?q=80&w=2662&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://images.unsplash.com/photo-1634009653379-a97409ee15de?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://images.unsplash.com/photo-1536245344390-dbf1df63c30a?q=80&w=2346&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://images.unsplash.com/photo-1507680465142-ef2223e23308?q=80&w=1951&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+      ]
     }
   }
 
@@ -79,9 +100,9 @@ function App() {
     const isOpen = openHits.has(hit.objectID);
 
     return (
-      <div className='row w-100'>
+      <div className='row w-100 g-0 flex-column-reverse flex-sm-row'>
         {/* results list */}
-        <div className='col-sm-8'>
+        <div className='col-sm-8 py-3'>
           <h2>{hit.Name}</h2>
           <p className='text-secondary mb-2'>{formatDate(hit.Begin_Date)} - {formatDate(hit.End_Date)}</p>
           <Badge className='me-2' bg={severityDetails[hit.Loss_of_Life_Severity] || 'primary'}>{`${hit.Loss_of_Life.toLocaleString()} Deaths`}</Badge>
@@ -119,8 +140,15 @@ function App() {
           </div>
 
         </div >
-        <div className='col-sm-4'>
-          <img src={categoryDetails[hit.Category.cat_level0[0]]?.image} className="img-fluid rounded" />
+        <div className='col-sm-4 p-0'>
+          <img
+            src={(() => {
+              const imgs = categoryDetails[hit.Category.cat_level0[0]]?.images || [];
+              return imgs[parseInt(hit.objectID) % imgs.length] || '';
+            })()}
+            className="img-fluid w-100 rounded-top rounded-sm-end rounded-sm-top-0"
+            style={{ objectFit: 'cover', maxHeight: '200px' }}
+          />
         </div>
       </div>
     );

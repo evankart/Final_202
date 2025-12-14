@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRange } from 'react-instantsearch';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
@@ -16,6 +16,7 @@ const CostSlider = ({ attribute }) => {
     const { refine } = useRange({ attribute });
     const [sliderValues, setSliderValues] = useState([0, 100]);
 
+    // convert slider value to actual value
     const sliderToValue = (sliderPos) => {
         for (let i = 0; i < steps.length - 1; i++) {
             const [lower, upper] = [steps[i], steps[i + 1]];
@@ -29,18 +30,12 @@ const CostSlider = ({ attribute }) => {
 
     const [min, max] = [sliderToValue(sliderValues[0]), sliderToValue(sliderValues[1])];
 
-    const applyRefine = (values) => {
-        const [minB, maxB] = [sliderToValue(values[0]), sliderToValue(values[1])];
-        refine([minB * 1e9, maxB * 1e9]);
-    };
-
-    useEffect(() => {
-        applyRefine(sliderValues);
-    }, []);
-
     const handleChange = (newValues) => {
         setSliderValues(newValues);
-        applyRefine(newValues);
+        const [minB, maxB] = [sliderToValue(newValues[0]), sliderToValue(newValues[1])];
+        const lowerBound = newValues[0] <= 0 ? undefined : minB * 1e9;
+        const upperBound = newValues[1] >= 100 ? undefined : maxB * 1e9;
+        refine([lowerBound, upperBound]);
     };
 
     const primary = '#0d6efd';
